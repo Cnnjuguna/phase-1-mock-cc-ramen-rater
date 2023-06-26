@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
 
   const ramenMenu = document.querySelector("#ramen-menu"); 
   const ramenDetail = document.querySelector("#ramen-detail"); 
-  const ramenName = document.querySelector(".name");
+  const ramenName = document.querySelector("h2");
   const ramenRestaurant = document.querySelector(".restaurant");
   const ramenRatings = document.querySelector("#rating-display");
   const ramenComment = document.getElementById("comment-display");
@@ -81,7 +81,71 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
 
   await renderRamenData();
 
-})
+    async function createNewRamen(e){
+    e.preventDefault();
+
+
+
+
+    const newRestaurant = document.getElementById("new-restaurant" );
+    const newRamenName = document.getElementById("new-name");
+    const newRamenRating = document.getElementById("new-rating");
+    const newRamenComment = document.getElementById("new-comment");
+    const newRamenImage = document.getElementById("new-image");
+    const createARamenBtn = document.getElementById("createARamen");
+    const newRamenForm = document.getElementById('new-char');
+
+
+
+    const formData = new FormData(newCharForm);
+    const data = Object.fromEntries(formData.entries());
+
+
+    const newRamen = {
+      name: newRamenName.value,
+      restaurant: newRestaurant.value,
+      rating: newRamenRating.value,
+      comment: newRamenComment.value,
+      image: newRamenImage.value,
+
+    }
+
+    await fetch("http://localhost:3000/ramens", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newRamen)
+  });
+    // Clear the form inputs
+    newRamenForm.reset();
+
+  // Refresh 
+    ramenMenu.innerHTML = "";
+
+    await renderRamenData();
+
+    const ramenForm = document.getElementById('new-ramen');
+    ramenForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+
+
+    })
+  }
+
+});
+    // const imageValid = new Image();
+    // imageValid.src = newCharImageURL;
+
+    // imageValid.addEventListener("load", async () => {
+
+    // })
+
+
+
+
+
 
 
 
